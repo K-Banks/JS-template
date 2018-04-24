@@ -1,7 +1,8 @@
 const path = require('path');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: './src/main.js',
@@ -14,10 +15,11 @@ module.exports = {
     contentBase: './dist'
   },
   plugins: [
+    new CopyWebpackPlugin([{ from: 'src/img', to: 'img'}]),
     new UglifyJsPlugin({ sourceMap: true }),
     new CleanWebpackPlugin(['dist']),
     new HtmlWebpackPlugin({
-      title: '[Project Title]',
+      title: 'Title Words',
       template: './src/index.html',
       inject: 'body'
     })
@@ -25,30 +27,45 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.css$/,
+        test: /\.(jpg|png|svg)$/,
         use: [
-          'style-loader',
-          'css-loader'
+            {
+              loader: 'file-loader',
+              options: {}
+            }
         ]
+      },
+      {
+      test: /\.css$/,
+      use: [
+        'style-loader',
+        'css-loader'
+      ]
+      },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: "eslint-loader"
       },
       {
         test: /\.js$/,
         exclude: [
-                /node_modules/,
-                /spec/
-              ],
+          /node_modules/,
+          /spec/
+        ],
         loader: "eslint-loader"
       },
-     {
-      test: /\.js$/,
-      exclude: [
-        /node_modules/,
-        /spec/
-      ],
-      loader: "babel-loader",
-      options: {
-      presets: ['es2015']
+      {
+        test: /\.js$/,
+        exclude: [
+          /node_modules/,
+          /spec/
+        ],
+        loader: "babel-loader",
+        options: {
+        presets: ['es2015']
+        }
       }
-    ]
-  }
+   ]
+ }
 };
