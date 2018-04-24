@@ -1,5 +1,5 @@
 {
-  "name": "[repo-name]",
+  "name": "Template",
   "version": "1.0.0",
   "description": "",
   "main": "main.js",
@@ -9,7 +9,7 @@
     "start": "npm run build; webpack-dev-server --open --mode development",
     "watch": "webpack --watch",
     "lint": "eslint src/*.js",
-    "fix" : "eslint --fix src/*.js"
+    "fix": "eslint --fix src/*.js"
   },
   "repository": {
     "type": "git"
@@ -45,7 +45,7 @@
     "webpack-cli": "^2.0.9",
     "webpack-dev-server": "^3.1.0"
   },
-   "dependencies": {
+  "dependencies": {
     "bootstrap": "^4.1.0",
     "copy-webpack-plugin": "^4.5.1",
     "jquery": "^3.3.1",
